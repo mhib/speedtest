@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+$file = File.join(
+  File.dirname(__FILE__), Time.now.strftime('%H:%M-%d-%m-%y_speed.txt')
+)
+%x(/usr/local/bin/speedtest-cli --simple > #$file)
