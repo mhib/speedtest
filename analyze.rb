@@ -81,4 +81,4 @@ $regexps.each_key do |k|
 end
 g.minimum_value = 0.0
 g.y_axis_increment = 5
-g.write('graph.png')
+g.write("graph_#{Time.now.to_s[0..9]}.png")
