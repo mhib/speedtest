@@ -1,4 +1,5 @@
 require 'gruff'
+
 $regexps = {
   ping: /Ping: ((\d|\.)+)/,
   download: /Download: ((\d|\.)+)/,
