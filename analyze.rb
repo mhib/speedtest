@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'gruff'
 
 $regexps = {
@@ -10,8 +11,8 @@ Entry = Struct.new(:date, :upload, :download, :ping)
 Hour = Struct.new(:hour, :entries) do
   ['max', 'min'].each do |str|
     $regexps.each_key do |key|
-      name = "#{str}_#{key}".freeze
-      i_name = "@#{name}".freeze
+      name = "#{str}_#{key}"
+      i_name = "@#{name}"
       define_method name do
         if instance_variable_defined?(i_name)
           instance_variable_get(i_name)
@@ -22,8 +23,8 @@ Hour = Struct.new(:hour, :entries) do
     end
 
     $regexps.each_key do |key|
-      name = "avg_#{key}".freeze
-      i_name = "@#{name}".freeze
+      name = "avg_#{key}"
+      i_name = "@#{name}"
       define_method name do
         if instance_variable_defined?(i_name)
           instance_variable_get(i_name)
