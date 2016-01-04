@@ -28,13 +28,13 @@ Hour = Struct.new(:hour, :entries) do
         if instance_variable_defined?(i_name)
           instance_variable_get(i_name)
         else
-          instance_variable_set(i_name, (entries.inject(0) { |m, a| m + a.send(key) } / entries.size).round)
+          instance_variable_set(i_name, (entries.inject(0) { |m, a| m + a.send(key) } / entries.size))
         end
       end
     end
 
     def to_s
-      "#{hour}\tPing: #{avg_ping}\tDownload: #{avg_download}\tUpload: #{avg_upload}"
+      sprintf("%s\tPing: %.2f\tDownload: %.2f\tUpload: %.2f", hour, avg_ping, avg_download, avg_upload)
     end
   end
 end
