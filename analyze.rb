@@ -23,13 +23,21 @@ Hour = Struct.new(:hour, :entries) do
     $regexps.each_key do |key|
       name = "#{str}_#{key}"
       i_name = "@#{name}"
-      cache_method(name, i_name, -> s { s.entries.send("#{str}_by") { |n| n.send(key) }.send(key) })
+      cache_method(
+        name,
+        i_name,
+        -> s { s.entries.send("#{str}_by") { |n| n.send(key) }.send(key) }
+      )
     end
 
     $regexps.each_key do |key|
       name = "avg_#{key}"
       i_name = "@#{name}"
-      cache_method(name, i_name, -> s { s.entries.inject(0) { |m, a| m + a.send(key) } / s.entries.size })
+      cache_method(
+        name,
+        i_name,
+        -> s { s.entries.inject(0) { |m, a| m + a.send(key) } / s.entries.size }
+      )
     end
 
     def to_s
