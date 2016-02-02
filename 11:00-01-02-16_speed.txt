@@ -1,0 +1,3 @@
+Ping: 10.775 ms
+Download: 6.74 Mbit/s
+Upload: 56.07 Mbit/s
