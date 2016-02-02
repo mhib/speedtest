@@ -9,29 +9,27 @@ $regexps = {
 
 Entry = Struct.new(:date, :upload, :download, :ping)
 Hour = Struct.new(:hour, :entries) do
+  def self.cache_method(name, i_name, block)
+    define_method name do
+      if instance_variable_defined?(i_name)
+        instance_variable_get(i_name)
+      else
+        instance_variable_set(i_name, block.call(self))
+      end
+    end
+  end
+
   ['max', 'min'].each do |str|
     $regexps.each_key do |key|
       name = "#{str}_#{key}"
       i_name = "@#{name}"
-      define_method name do
-        if instance_variable_defined?(i_name)
-          instance_variable_get(i_name)
-        else
-          instance_variable_set(i_name, entries.send("#{str}_by") { |n| n.send(key) }.send(key))
-        end
-      end
+      cache_method(name, i_name, -> s { s.entries.send("#{str}_by") { |n| n.send(key) }.send(key) })
     end
 
     $regexps.each_key do |key|
       name = "avg_#{key}"
       i_name = "@#{name}"
-      define_method name do
-        if instance_variable_defined?(i_name)
-          instance_variable_get(i_name)
-        else
-          instance_variable_set(i_name, (entries.inject(0) { |m, a| m + a.send(key) } / entries.size))
-        end
-      end
+      cache_method(name, i_name, -> s { s.entries.inject(0) { |m, a| m + a.send(key) } / s.entries.size })
     end
 
     def to_s

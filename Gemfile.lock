@@ -3,13 +3,17 @@ GEM
   specs:
     gruff (0.6.0)
       rmagick (>= 2.13.4)
+    gruff (0.6.0-java)
+      rmagick4j (>= 0.3.9)
     rmagick (2.15.4)
+    rmagick4j (0.3.9-java)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
   gruff
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
