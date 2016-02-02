@@ -19,7 +19,7 @@ Hour = Struct.new(:hour, :entries) do
     end
   end
 
-  ['max', 'min'].each do |str|
+  %w(min max).each do |str|
     $regexps.each_key do |key|
       name = "#{str}_#{key}"
       i_name = "@#{name}"
@@ -29,20 +29,20 @@ Hour = Struct.new(:hour, :entries) do
         -> s { s.entries.send("#{str}_by") { |n| n.send(key) }.send(key) }
       )
     end
+  end
 
-    $regexps.each_key do |key|
-      name = "avg_#{key}"
-      i_name = "@#{name}"
-      cache_method(
-        name,
-        i_name,
-        -> s { s.entries.inject(0) { |m, a| m + a.send(key) } / s.entries.size }
-      )
-    end
+  $regexps.each_key do |key|
+    name = "avg_#{key}"
+    i_name = "@#{name}"
+    cache_method(
+      name,
+      i_name,
+      -> s { s.entries.inject(0) { |m, a| m + a.send(key) } / s.entries.size }
+    )
+  end
 
-    def to_s
-      sprintf("%s\tPing: %.2f\tDownload: %.2f\tUpload: %.2f", hour, avg_ping, avg_download, avg_upload)
-    end
+  def to_s
+    sprintf("%s\tPing: %.2f\tDownload: %.2f\tUpload: %.2f", hour, avg_ping, avg_download, avg_upload)
   end
 end
 
