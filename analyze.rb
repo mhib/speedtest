@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 require 'gruff'
 
-$regexps = {
-  ping: /Ping: ((\d|\.)+)/,
-  download: /Download: ((\d|\.)+)/,
-  upload: /Upload: ((\d|\.)+)/
-}.freeze
+$regexps = Hash[%i(ping download upload).map { |n| [n, /#{n.to_s.capitalize}: ((\d|\.)+)/] } ]
 
 Entry = Struct.new(:date, :upload, :download, :ping)
 Hour = Struct.new(:hour, :entries) do
@@ -43,7 +39,11 @@ Hour = Struct.new(:hour, :entries) do
 
   def to_s
     @to_s ||= $regexps.keys.each_with_object String.new("#{hour}\t") do |a, m|
-      m << sprintf("%s: %.2f(Max/Min: %.2f/%.2f)\t", a.to_s.capitalize, *(%w(avg max min).map { |s| self.send("#{s}_#{a}") }))
+      m << sprintf(
+        "%s: %.2f(Max/Min: %.2f/%.2f)\t",
+        a.to_s.capitalize,
+        *(%w(avg max min).map { |s| self.send("#{s}_#{a}") })
+      )
     end.chomp("\t")
   end
 end
