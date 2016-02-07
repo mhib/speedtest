@@ -42,7 +42,9 @@ Hour = Struct.new(:hour, :entries) do
   end
 
   def to_s
-    sprintf("%s\tPing: %.2f\tDownload: %.2f\tUpload: %.2f", hour, avg_ping, avg_download, avg_upload)
+    @to_s ||= $regexps.keys.each_with_object String.new("#{hour}\t") do |a, m|
+      m << sprintf("%s: %.2f(Max/Min: %.2f/%.2f)\t", a.to_s.capitalize, *(%w(avg max min).map { |s| self.send("#{s}_#{a}") }))
+    end.chomp("\t")
   end
 end
 
