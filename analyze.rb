@@ -17,22 +17,18 @@ Hour = Struct.new(:hour, :entries) do
 
   %w(min max).each do |str|
     $regexps.each_key do |key|
-      name = "#{str}_#{key}"
-      i_name = "@#{name}"
       cache_method(
-        name,
-        i_name,
+        "#{str}_#{key}",
+        "@#{str}_#{key}",
         -> s { s.entries.send("#{str}_by") { |n| n.send(key) }.send(key) }
       )
     end
   end
 
   $regexps.each_key do |key|
-    name = "avg_#{key}"
-    i_name = "@#{name}"
     cache_method(
-      name,
-      i_name,
+      "avg_#{key}",
+      "@avg_#{key}",
       -> s { s.entries.inject(0) { |m, a| m + a.send(key) } / s.entries.size }
     )
   end
@@ -53,14 +49,14 @@ $hours = []
 
 Dir.glob(File.join(File.dirname(__FILE__), '*.txt')) do |file|
   string = IO.read(file)
-  next if string.empty? || /Could not/ === string
+  next if string.empty? || /Could not/ =~ string
   $entries << Entry.new(file.tr('_speed.txt', '').tr('/', ''), *$regexps.map do |_k, v|
     string.match(v).captures.first.to_f
   end)
 end
 
 $entries.group_by { |n| n.date[0..4] }.each do |k, v|
-  next unless /\A\d{1,2}:00\z/ === k
+  next unless /\A\d{1,2}:00\z/ =~ k
   $hours << Hour.new(k, v)
 end
 $hours.sort_by!(&:hour)
