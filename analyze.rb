@@ -49,14 +49,14 @@ $hours = []
 
 Dir.glob(File.join(File.dirname(__FILE__), '*.txt')) do |file|
   string = IO.read(file)
-  next if string.empty? || /Could not/ =~ string
+  next if string.empty? or string.start_with? 'Could not'
   $entries << Entry.new(file.tr('_speed.txt', '').tr('/', ''), *$regexps.map do |_k, v|
     string.match(v).captures.first.to_f
   end)
 end
 
 $entries.group_by { |n| n.date[0..4] }.each do |k, v|
-  next unless /\A\d{1,2}:00\z/ =~ k
+  next unless k.end_with? ':00'
   $hours << Hour.new(k, v)
 end
 $hours.sort_by!(&:hour)
