@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'gruff'
 
-$regexps = Hash[%i(ping download upload).map { |n| [n, /#{n.to_s.capitalize}: ((\d|\.)+)/] } ]
+$regexps = Hash[%i(ping download upload).map { |n| [n, /#{n.to_s.capitalize}: ((\d|\.)+)/] } ].freeze
 
 Entry = Struct.new(:date, :upload, :download, :ping)
 Hour = Struct.new(:hour, :entries) do
