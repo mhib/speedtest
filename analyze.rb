@@ -3,9 +3,8 @@ require 'gruff'
 
 $regexps = Hash[%i(ping download upload).map { |n| [n, /#{n.to_s.capitalize}: ((\d|\.)+)/] } ].freeze
 
-Entry = Struct.new(:date, :upload, :download, :ping)
-Hour = Struct.new(:hour, :entries) do
-  def self.cache_method(name, i_name, block)
+module MethodCachable
+  def cache_method(name, i_name, block)
     define_method name do
       if instance_variable_defined?(i_name)
         instance_variable_get(i_name)
@@ -14,6 +13,11 @@ Hour = Struct.new(:hour, :entries) do
       end
     end
   end
+end
+
+Entry = Struct.new(:date, :upload, :download, :ping)
+Hour = Struct.new(:hour, :entries) do
+  extend MethodCachable
 
   %w(min max).each do |str|
     $regexps.each_key do |key|
@@ -46,6 +50,7 @@ end
 
 $entries = []
 $hours = []
+
 Dir.glob(File.join(File.dirname(__FILE__), 'data', '*.txt')) do |file|
   string = IO.read(file)
   next if string.empty? or string.start_with? 'Could not' or string.start_with? 'Failed'
