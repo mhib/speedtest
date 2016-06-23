@@ -46,10 +46,10 @@ end
 
 $entries = []
 $hours = []
-Dir.glob(File.join(File.dirname(__FILE__), '*.txt')) do |file|
+Dir.glob(File.join(File.dirname(__FILE__), 'data', '*.txt')) do |file|
   string = IO.read(file)
   next if string.empty? or string.start_with? 'Could not' or string.start_with? 'Failed'
-  $entries << Entry.new(file.tr('_speed.txt', '').tr('/', ''), *$regexps.map do |_k, v|
+  $entries << Entry.new(file.tr('_speed.txt', '').tr('./data/', ''), *$regexps.map do |_k, v|
     string.match(v).captures.first.to_f
   end)
 end
@@ -86,4 +86,4 @@ $regexps.each_key do |k|
 end
 g.minimum_value = 0.0
 g.y_axis_increment = 5
-g.write("graph_#{Time.now.to_s[0..9]}.png")
+g.write(File.join(File.dirname(__FILE__), 'graphs', "graph_#{Time.now.to_s[0..9]}.png"))
