@@ -3,4 +3,4 @@ layout: month
 title: "04-16"
 ident: 1604
 ---
-<a href="/images/04-16.png"><img src="/images/04-16.png" class="mid" alt="Open" /></a>
+<a href="{{'/images/04-16.png' | prepend: site.baseurl }}"><img src="{{ '/images/04-16.png' | prepend: site.baseurl }}" class="mid" alt="Open" /></a>

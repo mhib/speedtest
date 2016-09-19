@@ -16,8 +16,8 @@
 title: Internet speed stats
 description: > # this means to ignore newlines until "baseurl:"
   Speed test
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://mhib.github.io/speedtest" # the base hostname & protocol for your site
+baseurl: "/speedtest" # the subpath of your site, e.g. /blog
+url: "http://mhib.github.io" # the base hostname & protocol for your site
 collections:
   months:
     output: true
