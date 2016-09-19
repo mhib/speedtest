@@ -1,0 +1,6 @@
+---
+layout: month
+title: "03-16"
+ident: 1603
+---
+<a href="/images/03-16.png"><img src="/images/03-16.png" class="mid" alt="Open" /></a>

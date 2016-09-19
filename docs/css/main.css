@@ -1,0 +1,11 @@
+.mid {
+  max-width: 500px;
+  max-height: 500px;
+  display: block;
+  height: auto;
+  width: auto;
+}
+
+.month-list {
+  list-style: none;
+}

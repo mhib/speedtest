@@ -1,0 +1,20 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  <a href="images/main.png"><img src="images/main.png" class="mid" /></a>
+  <h1 class="page-heading">Months</h1>
+
+  <ul class="month-list">
+    {% assign items = site.months | sort: 'ident' | reverse %}
+    {% for post in items %}
+      <li>
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
+        </h2>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
