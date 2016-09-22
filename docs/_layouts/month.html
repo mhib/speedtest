@@ -7,6 +7,9 @@
   </head>
   <body>
     <div class="content">
+      <p>
+        <a href="{{site.baseurl}}/">Home</a>
+      </p>
       {{ content }}
       {% if page.previous.url %}
         <a class="prev" href="{{page.previous.url | prepend: site.baseurl }}">&laquo; {{page.previous.title}}</a>
