@@ -1,6 +1,5 @@
 ---
 layout: month
-title: "05-16"
-ident: 1605
+title: 05-16
 ---
 <a href="{{'/images/05-16.png' | prepend: site.baseurl }}"><img src="{{ '/images/05-16.png' | prepend: site.baseurl }}" class="mid" alt="Open" /></a>
